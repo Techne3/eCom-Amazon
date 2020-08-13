@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { listProducts } from "../actions/productActions";
 
@@ -9,6 +10,10 @@ function HomeScreen(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listProducts());
+
+    return () => {
+      //
+    };
   }, []);
 
   return loading ? (
@@ -18,9 +23,9 @@ function HomeScreen(props) {
   ) : (
     <ul className="products">
       {products.map((product) => (
-        <li key={product._id}>
+        <li key={product.id}>
           <div className="product">
-            <Link to={"/product/" + product._id}>
+            <Link to={"/product/" + product.id}>
               <img
                 className="product-image"
                 src={product.image}
@@ -28,7 +33,7 @@ function HomeScreen(props) {
               />
             </Link>
             <div className="product-name">
-              <Link to={"/product/" + product._id}>{product.name}</Link>
+              <Link to={"/product/" + product.id}>{product.name}</Link>
             </div>
             <div className="product-brand">{product.brand}</div>
             <div className="product-price">${product.price}</div>
