@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookie from "js-cookie";
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
-// import { getState } from "";
 
 const addToCart = (productId, qty) => async (dispatch, getState) => {
   try {
