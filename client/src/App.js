@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import HomeScreen from "./Screens/HomeScreen";
 import ProductScreen from "./Screens/ProductScreen";
 import CartScreen from "./Screens/CartScreen";
+import SigninScreen from "./Screens/SigninScreen";
 
 function App() {
   const openMenu = () => {
@@ -22,7 +23,8 @@ function App() {
           </div>
           <div className="header-links">
             <a href="cart.html">Cart </a>
-            <a href="signin">SignIn </a>
+            <Link to="/signin">Sign In</Link>
+            {/* <a href="signin">SignIn </a> */}
           </div>
         </header>
         <aside className="sidebar">
@@ -42,6 +44,7 @@ function App() {
 
         <main className="main">
           <div className="content">
+            <Route path="/signin" component={SigninScreen} />
             <Route exact path="/" component={HomeScreen} />
             <Route path="/product/:id" component={ProductScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
