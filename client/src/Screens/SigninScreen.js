@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { signin } from "../actions/userActions";
 
 function SigninScreen(props) {
   const dispatch = useDispatch();
+  const userSignin = useSelector((state) => state.userSignin);
+  const { loading, userInfo, error } = userSignin;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,8 +17,10 @@ function SigninScreen(props) {
   };
 
   useEffect(() => {
-    //
-  }, []);
+    if (userInfo) {
+      props.history.push("/");
+    }
+  }, [userInfo]);
 
   return (
     <>
@@ -25,7 +31,11 @@ function SigninScreen(props) {
               <h2>Sign-In</h2>
             </li>
             <li>
-              <label for="email">Email</label>
+              {loading && <div>loading...</div>}
+              {error && <div>{error}</div>}
+            </li>
+            <li>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 name="email"
@@ -34,7 +44,7 @@ function SigninScreen(props) {
               />
             </li>
             <li>
-              <label for="password">Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 name="password"
