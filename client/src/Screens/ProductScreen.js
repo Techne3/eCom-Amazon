@@ -11,10 +11,13 @@ function ProductScreen(props) {
 
   useEffect(() => {
     dispatch(detailsProduct(props.match.params.id));
+    return () => {
+      //
+    };
   }, []);
 
   const handleAddToCart = () => {
-    props.history.push(`/cart/${props.match.params.id}?qty=${qty}`);
+    props.history.push("/cart/" + props.match.params.id + "?qty=" + qty);
   };
 
   return (
@@ -51,10 +54,17 @@ function ProductScreen(props) {
           <div className="details-action">
             <ul>
               <li>Price: {product.price}</li>
-              <li>Status: {product.countInStock > 0 ? "In Stock" : ""}</li>
+              <li>
+                Status: {product.countInStock > 0 ? "In Stock" : "Unavailable."}
+              </li>
               <li>
                 Qty:{" "}
-                <select value={qty} onChange={(e) => setQty(e.target.value)}>
+                <select
+                  value={qty}
+                  onChange={(e) => {
+                    setQty(e.target.value);
+                  }}
+                >
                   {[...Array(product.countInStock).keys()].map((x) => (
                     <option key={x + 1} value={x + 1}>
                       {x + 1}
@@ -63,7 +73,7 @@ function ProductScreen(props) {
                 </select>
               </li>
               <li>
-                {product.countInStock && (
+                {product.countInStock > 0 && (
                   <button onClick={handleAddToCart} className="button primary">
                     Add to Cart
                   </button>

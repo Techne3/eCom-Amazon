@@ -20,9 +20,10 @@ mongoose
 const app = express();
 app.use(bodyParser.json());
 app.use("/api/users", userRoute);
+
 app.get("/api/products/:id", (req, res) => {
   const productId = req.params.id;
-  const product = data.products.find((x) => x._id === productId);
+  const product = data.products.find((x) => x.id === productId);
   if (product) res.send(product);
   else res.status(404).send({ msg: "Product Not Found." });
 });
