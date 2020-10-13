@@ -31,6 +31,7 @@ function ProductsScreen(props) {
     e.preventDefault();
     dispatch(
       saveProduct({
+        _id: id,
         name,
         price,
         image,
@@ -48,9 +49,10 @@ function ProductsScreen(props) {
 
   const openModal = (product) => {
     setModalVisible(true);
-    setId(product.id);
+    setId(product._id);
     setName(product.name);
     setPrice(product.price);
+    setDescription(product.description);
     setImage(product.image);
     setBrand(product.brand);
     setCategory(product.category);
@@ -62,7 +64,7 @@ function ProductsScreen(props) {
   return (
     <>
       <div className="content content-margined">
-        <div>
+        <div className="product-header">
           <h3>Products</h3>
           <button onClick={() => openModal({})}>Create Product</button>
         </div>
@@ -83,6 +85,7 @@ function ProductsScreen(props) {
                     type="text"
                     name="name"
                     id="name"
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </li>
@@ -92,6 +95,7 @@ function ProductsScreen(props) {
                     type="text"
                     name="price"
                     id="price"
+                    value={price}
                     onChange={(e) => setPrice(e.target.value)}
                   />
                 </li>
@@ -101,6 +105,7 @@ function ProductsScreen(props) {
                     type="text"
                     name="image"
                     id="image"
+                    value={image}
                     onChange={(e) => setImage(e.target.value)}
                   />
                 </li>
@@ -110,6 +115,7 @@ function ProductsScreen(props) {
                     type="text"
                     name="brand"
                     id="brand"
+                    value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                   />
                 </li>
@@ -119,6 +125,7 @@ function ProductsScreen(props) {
                     type="text"
                     name="countInStock"
                     id="countInStock"
+                    value={countInStock}
                     onChange={(e) => setCountInStock(e.target.value)}
                   />
                 </li>
@@ -128,6 +135,7 @@ function ProductsScreen(props) {
                     type="text"
                     name="category"
                     id="category"
+                    value={category}
                     onChange={(e) => setCategory(e.target.value)}
                   />
                 </li>
@@ -136,12 +144,22 @@ function ProductsScreen(props) {
                   <textarea
                     name="description"
                     id="description"
+                    value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </li>
                 <li>
                   <button type="submit" className="button primary">
-                    Create
+                    {id ? "Update" : "Create"}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setModalVisible(false)}
+                    type="button"
+                    className="button secondary"
+                  >
+                    Cancel
                   </button>
                 </li>
               </ul>
@@ -163,7 +181,7 @@ function ProductsScreen(props) {
             <tbody>
               {products.map((product) => (
                 <tr>
-                  <td>{product.id}</td>
+                  <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
                   <td>{product.category}</td>
