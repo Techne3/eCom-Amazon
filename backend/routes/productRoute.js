@@ -9,6 +9,15 @@ router.get("/", async (req, res) => {
   const products = await Product.find({});
   res.send(products);
 });
+router.get("/:id", async (req, res) => {
+  const product = await Product.findOne({ _id: req.params.id });
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: "product not found" });
+  }
+  res.send(products);
+});
 
 router.put("/:id", isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;
@@ -62,7 +71,7 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
   return res.status(500).send({ message: " Error in Creating Product." });
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isAuth, isAdmin, async (req, res) => {
   const deletedProduct = await Product.findById(req.params.id);
 
   if (deletedProduct) {
